@@ -41,7 +41,20 @@ public class Level
     {
         TexturePallete = new Dictionary<int, string>
         {
-            {1, TextureNames.SomeTexture}
+            {1, TextureNames.Stone},
+            {2, TextureNames.BarrelWall},
+            {3, TextureNames.WoodWall},
+            {4, TextureNames.MansionWall},
         };
+    }
+
+    public string GetTextureName(int key)
+    {
+        if (TexturePallete.TryGetValue(key, out string textureName))
+        {
+            return textureName;
+        }
+
+        return TextureNames.MissingTexture;
     }
 }

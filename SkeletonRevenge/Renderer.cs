@@ -97,7 +97,9 @@ public class Renderer
             int drawEnd = lineHeight / 2 + _screenHeight / 2;
             if (drawEnd >= _screenHeight) drawEnd = _screenHeight - 1;
             
-            int texNum = level.worldMap[mapY, mapX] - 1;
+            int texNum = level.worldMap[mapY, mapX];
+            Color[] currentTextureColors = textureManager.GetTextureColor(level.GetTextureName(texNum));
+            
             double wallX;
             if (side == 0) wallX = player.Position.Y + perpWallDist * rayDirY;
             else wallX = player.Position.X + perpWallDist * rayDirX;
@@ -109,11 +111,12 @@ public class Renderer
 
             double step = 1.0 * textureManager.TextureHeight / lineHeight;
             double texPos = (drawStart - _screenHeight / 2 + lineHeight / 2) * step;
+
             for (int y = drawStart; y < drawEnd; y++)
             {
                 int texY = (int)texPos & (textureManager.TextureHeight - 1);
                 texPos += step;
-                Color texel = textureManager.GetTextureColor("something")[texX + textureManager.TextureWidth * texY];
+                Color texel = currentTextureColors[texX + textureManager.TextureWidth * texY];
                 if (side == 1)
                     texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
                 

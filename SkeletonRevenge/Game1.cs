@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -42,6 +43,7 @@ public class Game1 : Game
         
         _renderer = new Renderer(GraphicsDevice, ScreenWidth, ScreenHeight);
         _textureManager = new TextureManager();
+        _textureManager.LoadTextures(Content);
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
         _level = new Level();
     }

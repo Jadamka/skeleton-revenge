@@ -12,7 +12,7 @@ The engine is currently in active development. Here is the checklist of planned 
 
 **Engine & Rendering:**
 - [x] Drawing walls (with colors)
-- [ ] Wall Textures
+- [x] Wall Textures
 - [ ] Floor Casting
 - [ ] Ceiling Casting
 - [ ] 2D Sprite Rendering (Entities & Objects)

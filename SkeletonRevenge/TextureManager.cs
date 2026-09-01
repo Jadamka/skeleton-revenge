@@ -8,31 +8,42 @@ namespace SkeletonRevenge;
 
 public class TextureManager
 {
-    private Dictionary<string, Texture2D> _textures;
+    private Dictionary<string, Color[]> _textures;
 
-    public int TextureWidth { get; private set; } = 64;
-    public int TextureHeight { get; private set; } = 64;
+    public int TextureWidth { get; private set; } = 128;
+    public int TextureHeight { get; private set; } = 128;
 
     private Color[] _missingTexture;
     
     public TextureManager()
     {
-        _textures = new Dictionary<string, Texture2D>();
+        _textures = new Dictionary<string, Color[]>();
         
         CreateMissingTexture();
     }
 
     public void LoadTextures(ContentManager content)
     {
+        _textures[TextureNames.Stone] = LoadAndExtract(content, "textures/stone_texture");
+        _textures[TextureNames.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
+        _textures[TextureNames.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
+        _textures[TextureNames.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
+    }
+
+    private Color[] LoadAndExtract(ContentManager content, string path)
+    {
+        Texture2D texture = content.Load<Texture2D>(path);
+        Color[] data = new Color[TextureWidth * TextureHeight];
+        
+        texture.GetData(data);
+        return data;
     }
 
     public Color[] GetTextureColor(string textureName)
     {
-        if (_textures.TryGetValue(textureName, out Texture2D texture))
+        if (_textures.TryGetValue(textureName, out Color[] colors))
         {
-            Color[] color = new Color[TextureWidth * TextureHeight];
-            texture.GetData(color);
-            return color;
+            return colors;
         }
 
         return _missingTexture;
