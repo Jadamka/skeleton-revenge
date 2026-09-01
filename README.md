@@ -26,5 +26,9 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] More levels
 - [ ] Story
 
+## Pictures from each update of game
+<img width="1282" height="749" alt="skeletonRevengeGame1" src="https://github.com/user-attachments/assets/2785e911-1a6a-4dc6-a24f-c4009c868f19" />
+
+
 ## ⚠️ Disclaimer
 *Note: This is personal project created for learning and development purposes. Textures and visual assets are currently sourced from Monolith Productions game "Blood (1997) and are used strictly as non-commercial placeholders.*
