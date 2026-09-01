@@ -27,7 +27,18 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Story
 
 ## Pictures from each update of game
-<img width="1282" height="749" alt="skeletonRevengeGame1" src="https://github.com/user-attachments/assets/2785e911-1a6a-4dc6-a24f-c4009c868f19" />
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/2785e911-1a6a-4dc6-a24f-c4009c868f19" alt="Update 1" width="100%"/>
+      <br /><em>Update 1: Drawing Walls</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/6bf06cb5-d1e9-4cd6-952a-a34ce8b2882f" alt="Update 2" width="100%"/>
+      <br /><em>Update 2: Textures</em>
+    </td>
+  </tr>
+</table>
 
 
 ## ⚠️ Disclaimer
