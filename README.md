@@ -20,6 +20,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Animated sprites
 
 **Gameplay & Content**
+- [ ] Night sky with stars for maps without ceiling
 - [ ] Working Weapon System
 - [ ] Decals
 - [ ] HUD
