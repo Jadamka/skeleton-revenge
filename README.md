@@ -21,6 +21,7 @@ The engine is currently in active development. Here is the checklist of planned 
 
 **Gameplay & Content**
 - [ ] Working Weapon System
+- [ ] Decals
 - [ ] HUD
 - [ ] Enemy AI and Combat
 - [ ] More levels
