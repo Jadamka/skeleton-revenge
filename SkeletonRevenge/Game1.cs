@@ -15,6 +15,7 @@ public class Game1 : Game
     private Player _player;
     private Level _level;
     private Renderer _renderer;
+    private TextureManager _textureManager;
     
     public Game1()
     {
@@ -40,6 +41,7 @@ public class Game1 : Game
         DebugOverlay.SetFont(font1);
         
         _renderer = new Renderer(GraphicsDevice, ScreenWidth, ScreenHeight);
+        _textureManager = new TextureManager();
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
         _level = new Level();
     }
@@ -60,7 +62,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        _renderer.Render3D(_spriteBatch, GraphicsDevice, _player, _level);
+        _renderer.Render3D(_spriteBatch, GraphicsDevice, _textureManager, _player, _level);
         
         DebugOverlay.Draw(_spriteBatch, gameTime, _player);
         

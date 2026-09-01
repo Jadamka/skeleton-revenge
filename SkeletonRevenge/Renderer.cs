@@ -22,7 +22,7 @@ public class Renderer
         ClearBuffer();
     }
 
-    public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Player player, Level level)
+    public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, TextureManager textureManager, Player player, Level level)
     {
         for (int x = 0; x < _screenWidth; x++)
         {
@@ -96,22 +96,28 @@ public class Renderer
             if (drawStart < 0) drawStart = 0;
             int drawEnd = lineHeight / 2 + _screenHeight / 2;
             if (drawEnd >= _screenHeight) drawEnd = _screenHeight - 1;
+            
+            int texNum = level.worldMap[mapY, mapX] - 1;
+            double wallX;
+            if (side == 0) wallX = player.Position.Y + perpWallDist * rayDirY;
+            else wallX = player.Position.X + perpWallDist * rayDirX;
+            wallX -= Math.Floor(wallX);
 
-            Color color;
-            switch (level.worldMap[mapY, mapX])
-            {
-                case 1: color = Color.Red; break;
-                case 2: color = Color.Green; break;
-                case 3: color = Color.Blue; break;
-                case 4: color = Color.White; break;
-                default: color = Color.Yellow; break;
-            }
+            int texX = (int)(wallX * (double)(textureManager.TextureWidth));
+            if (side == 0 && rayDirX > 0) texX = textureManager.TextureWidth - texX - 1;
+            if (side == 1 && rayDirY < 0) texX = textureManager.TextureWidth - texX - 1;
 
-            if (side == 1) color = new Color(color.R / 2, color.G / 2, color.B / 2);
-
+            double step = 1.0 * textureManager.TextureHeight / lineHeight;
+            double texPos = (drawStart - _screenHeight / 2 + lineHeight / 2) * step;
             for (int y = drawStart; y < drawEnd; y++)
             {
-                _buffer[x + _screenWidth * y] = color;
+                int texY = (int)texPos & (textureManager.TextureHeight - 1);
+                texPos += step;
+                Color texel = textureManager.GetTextureColor("something")[texX + textureManager.TextureWidth * texY];
+                if (side == 1)
+                    texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
+                
+                _buffer[x + _screenWidth * y] = texel;
             }
         }
         

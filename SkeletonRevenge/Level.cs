@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 namespace SkeletonRevenge;
 
 public class Level
 {
+    public Dictionary<int, string> TexturePallete { get; private set; }
+    
     public const int MapWidth = 24;
     public const int MapHeight = 24;
 
@@ -32,4 +36,12 @@ public class Level
         { 1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
+
+    public Level()
+    {
+        TexturePallete = new Dictionary<int, string>
+        {
+            {1, TextureNames.SomeTexture}
+        };
+    }
 }
