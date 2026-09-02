@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,8 +11,8 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private int ScreenWidth = 1280;
-    private int ScreenHeight = 720;
+    private int ScreenWidth = 800;
+    private int ScreenHeight = 600;
 
     private Player _player;
     private Level _level;
@@ -23,7 +24,9 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = ScreenWidth;
         _graphics.PreferredBackBufferHeight = ScreenHeight;
+        
         Content.RootDirectory = "Content";
+        
         IsMouseVisible = true;
     }
 

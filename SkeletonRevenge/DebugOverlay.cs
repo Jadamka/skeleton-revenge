@@ -21,6 +21,10 @@ public sealed class DebugOverlay
     private static bool _isFontSet = false;
 
     private static bool _isVisible = true;
+
+    private static int _frameCount = 0;
+    private static double _timeElapsed = 0;
+    private static int _displayFps = 30;
     
     public static void SetFont(SpriteFont font)
     {
@@ -36,10 +40,18 @@ public sealed class DebugOverlay
     public static void Draw(SpriteBatch spriteBatch, GameTime gameTime, Player player)
     {
         if (!_isVisible || !_isFontSet) return;
-        
-        double fps = 1.0 / gameTime.ElapsedGameTime.TotalSeconds;
 
-        string debugText = $"FPS: {fps:F4}\n" +
+        _frameCount++;
+        _timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (_timeElapsed >= 1.0)
+        {
+            _displayFps = _frameCount;
+            _frameCount = 0;
+            _timeElapsed -= 1.0;
+        }
+
+        string debugText = $"FPS: {_displayFps:F4}\n" +
                            $"X: {player.Position.X:F2}\n" +
                            $"Y: {player.Position.Y:F2}";
 

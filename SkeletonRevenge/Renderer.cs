@@ -206,9 +206,6 @@ public class Renderer
 
     private void ClearBuffer()
     {
-        for (int i = 0; i < _screenWidth * _screenHeight; i++)
-        {
-            _buffer[i] = Color.Black;
-        }
+        Array.Fill(_buffer, Color.Black);
     }
 }
