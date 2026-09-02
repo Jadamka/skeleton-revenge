@@ -7,6 +7,7 @@ public static class TextureNames
     public const string MansionWall = "mansion_wall";
     public const string BarrelWall = "barrel_wall";
     public const string GrassFloor = "grass_floor";
+    public const string BloodyBrickWall = "bloody_brick_wall";
 
     public const string MissingTexture = "missing_texture";
 }

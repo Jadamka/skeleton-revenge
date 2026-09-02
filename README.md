@@ -14,7 +14,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [x] Drawing walls (with colors)
 - [x] Wall Textures
 - [x] Floor Casting
-- [ ] Ceiling Casting
+- [x] Ceiling Casting
 - [ ] 2D Sprite Rendering (Entities & Objects)
 - [ ] Distance fog
 - [ ] Night sky with stars that rotate with players rotation

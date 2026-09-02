@@ -15,6 +15,7 @@ public class Renderer
     private Level _cachedLevel = null;
     private Dictionary<int, Color[]> _wallTextureCache = new Dictionary<int, Color[]>();
     private Dictionary<int, Color[]> _floorTextureCache = new Dictionary<int, Color[]>();
+    private Dictionary<int, Color[]> _ceilingTextureCache = new Dictionary<int, Color[]>();
     private Color[] _missingTextureColors;
 
     private GraphicsDevice _graphicsDevice;
@@ -31,7 +32,7 @@ public class Renderer
         ClearBuffer();
     }
 
-    private void FloorCasting(TextureManager textureManager, Player player, Level level)
+    private void FloorAndCeilingCasting(TextureManager textureManager, Player player, Level level)
     {
         for (int y = (_bufferHeight)/2 + 1; y < _bufferHeight; y++)
         {
@@ -69,8 +70,21 @@ public class Renderer
                     {
                         floorTextureColors = _missingTextureColors;
                     }
+                    
                     Color texel = floorTextureColors[textureManager.TextureWidth * ty + tx];
+                    texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
                     _buffer[x + _bufferWidth * y] = texel;
+
+                    texNum = level.ceilingMap[cellY, cellX];
+                    if (!_ceilingTextureCache.TryGetValue(texNum, out Color[] ceilingTextureColors))
+                    {
+                        ceilingTextureColors = _missingTextureColors;
+                    }
+
+                    texel = ceilingTextureColors[textureManager.TextureWidth * ty + tx];
+                    texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
+                    _buffer[x + (_bufferWidth * (_bufferHeight - y - 1))] = texel;
+
                 }
             }
         }
@@ -196,10 +210,14 @@ public class Renderer
             foreach (var kvp in level.FloorPallete)
                 _floorTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
 
+            _ceilingTextureCache.Clear();
+            foreach(var kvp in level.CeilingPallete)
+                _ceilingTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+            
             _cachedLevel = level;
         }
         
-        FloorCasting(textureManager, player, level);
+        FloorAndCeilingCasting(textureManager, player, level);
         WallCasting(textureManager, player, level);
         
         _screenTexture.SetData(_buffer);
