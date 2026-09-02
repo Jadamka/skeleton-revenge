@@ -13,7 +13,7 @@ The engine is currently in active development. Here is the checklist of planned 
 **Engine & Rendering:**
 - [x] Drawing walls (with colors)
 - [x] Wall Textures
-- [ ] Floor Casting
+- [x] Floor Casting
 - [ ] Ceiling Casting
 - [ ] 2D Sprite Rendering (Entities & Objects)
 - [ ] Distance fog
@@ -40,6 +40,10 @@ The engine is currently in active development. Here is the checklist of planned 
     <td align="center">
       <img src="https://github.com/user-attachments/assets/6bf06cb5-d1e9-4cd6-952a-a34ce8b2882f" alt="Update 2" width="100%"/>
       <br /><em>Update 2: Textures</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/cb3fa8f1-5269-4139-8117-8f3691880416" alt="Update 3" width="100%"/>
+      <br /><em>Update 3: Floor Casting</em>
     </td>
   </tr>
 </table>
