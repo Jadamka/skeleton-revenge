@@ -16,12 +16,13 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Floor Casting
 - [ ] Ceiling Casting
 - [ ] 2D Sprite Rendering (Entities & Objects)
+- [ ] Distance fog
+- [ ] Night sky with stars that rotate with players rotation
+- [ ] Add collision to certain sprites
 - [ ] More complex lighting system
 - [ ] Animated sprites
 
 **Gameplay & Content**
-- [ ] Night sky with stars for levels without ceiling
-- [ ] Distance fog for some levels
 - [ ] Working Weapon System
 - [ ] Decals
 - [ ] HUD
