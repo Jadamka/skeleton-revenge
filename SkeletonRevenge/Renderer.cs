@@ -12,6 +12,11 @@ public class Renderer
     private int _screenHeight;
     private Texture2D _screenTexture;
 
+    private Level _cachedLevel = null;
+    private Dictionary<int, Color[]> _wallTextureCache = new Dictionary<int, Color[]>();
+    private Dictionary<int, Color[]> _floorTextureCache = new Dictionary<int, Color[]>();
+    private Color[] _missingTextureColors;
+
     public Renderer(GraphicsDevice graphicsDevice, int screenWidth, int screenHeight)
     {
         _screenWidth = screenWidth;
@@ -25,13 +30,6 @@ public class Renderer
 
     private void FloorCasting(TextureManager textureManager, Player player, Level level)
     {
-        Dictionary<int, Color[]> activeFloorTextures = new Dictionary<int, Color[]>();
-        Color[] missingTextureColors = textureManager.GetTextureColor("");
-        foreach (var kvp in level.FloorPallete)
-        {
-            activeFloorTextures[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
-        }
-        
         for (int y = _screenHeight/2 + 1; y < _screenHeight; y++)
         {
             float rayDirX0 = (float)(player.Direction.X - player.Plane.X);
@@ -64,9 +62,9 @@ public class Renderer
                 if (cellX >= 0 && cellX < 24 && cellY >= 0 && cellY < 24)
                 {
                     int texNum = level.floorMap[cellY, cellX];
-                    if (!activeFloorTextures.TryGetValue(texNum, out Color[] floorTextureColors))
+                    if (!_floorTextureCache.TryGetValue(texNum, out Color[] floorTextureColors))
                     {
-                        floorTextureColors = missingTextureColors;
+                        floorTextureColors = _missingTextureColors;
                     }
                     Color texel = floorTextureColors[textureManager.TextureWidth * ty + tx];
                     _buffer[x + _screenWidth * y] = texel;
@@ -77,13 +75,6 @@ public class Renderer
 
     private void WallCasting(TextureManager textureManager, Player player, Level level)
     {
-        Dictionary<int, Color[]> activeWallTextures = new Dictionary<int, Color[]>();
-        Color[] missingTextureColors = textureManager.GetTextureColor("");
-        foreach (var kvp in level.WallPallete)
-        {
-            activeWallTextures[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
-        }
-        
         for (int x = 0; x < _screenWidth; x++)
         {
             double cameraX = 2 * x / (double)(_screenWidth) - 1;
@@ -158,9 +149,9 @@ public class Renderer
             if (drawEnd >= _screenHeight) drawEnd = _screenHeight - 1;
             
             int texNum = level.wallMap[mapY, mapX];
-            if (!activeWallTextures.TryGetValue(texNum, out Color[] wallTextureColors))
+            if (!_wallTextureCache.TryGetValue(texNum, out Color[] wallTextureColors))
             {
-                wallTextureColors = missingTextureColors;
+                wallTextureColors = _missingTextureColors;
             }
             
             double wallX;
@@ -190,6 +181,21 @@ public class Renderer
     
     public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, TextureManager textureManager, Player player, Level level)
     {
+        if (_cachedLevel != level)
+        {
+            _missingTextureColors = textureManager.GetTextureColor(TextureNames.MissingTexture);
+            
+            _wallTextureCache.Clear();
+            foreach (var kvp in level.WallPallete)
+                _wallTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+            
+            _floorTextureCache.Clear();
+            foreach (var kvp in level.FloorPallete)
+                _floorTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+
+            _cachedLevel = level;
+        }
+        
         FloorCasting(textureManager, player, level);
         WallCasting(textureManager, player, level);
         
