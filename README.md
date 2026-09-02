@@ -41,9 +41,15 @@ The engine is currently in active development. Here is the checklist of planned 
       <img src="https://github.com/user-attachments/assets/6bf06cb5-d1e9-4cd6-952a-a34ce8b2882f" alt="Update 2" width="100%"/>
       <br /><em>Update 2: Textures</em>
     </td>
+  </tr>
+  <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/cb3fa8f1-5269-4139-8117-8f3691880416" alt="Update 3" width="100%"/>
       <br /><em>Update 3: Floor Casting</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/7c877944-693e-4835-900b-a865077da0fd" alt="Update 4" width="100%"/>
+      <br /><em>Update 4: Ceiling Casting</em>
     </td>
   </tr>
 </table>
