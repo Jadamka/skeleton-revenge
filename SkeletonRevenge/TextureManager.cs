@@ -28,6 +28,7 @@ public class TextureManager
         _textures[TextureNames.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
         _textures[TextureNames.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
         _textures[TextureNames.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
+        _textures[TextureNames.GrassFloor] = LoadAndExtract(content, "textures/grass_floor_texture");
     }
 
     private Color[] LoadAndExtract(ContentManager content, string path)

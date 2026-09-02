@@ -31,16 +31,16 @@ public class Player
 
         if (Keyboard.GetState().IsKeyDown(Keys.Up))
         {
-            if (level.worldMap[(int)(Position.Y), (int)(Position.X + Direction.X * _moveSpeed * deltaTime)] == 0)
+            if (level.wallMap[(int)(Position.Y), (int)(Position.X + Direction.X * _moveSpeed * deltaTime)] == 0)
                 Position.X += (float)(Direction.X * _moveSpeed * deltaTime);
-            if (level.worldMap[(int)(Position.Y + Direction.Y * _moveSpeed * deltaTime), (int)(Position.X)] == 0)
+            if (level.wallMap[(int)(Position.Y + Direction.Y * _moveSpeed * deltaTime), (int)(Position.X)] == 0)
                 Position.Y += (float)(Direction.Y * _moveSpeed * deltaTime);
         }
         if (Keyboard.GetState().IsKeyDown(Keys.Down))
         {
-            if (level.worldMap[(int)(Position.Y), (int)(Position.X - Direction.X * _moveSpeed * deltaTime)] == 0)
+            if (level.wallMap[(int)(Position.Y), (int)(Position.X - Direction.X * _moveSpeed * deltaTime)] == 0)
                 Position.X -= (float)(Direction.X * _moveSpeed * deltaTime);
-            if (level.worldMap[(int)(Position.Y - Direction.Y * _moveSpeed * deltaTime), (int)(Position.X)] == 0)
+            if (level.wallMap[(int)(Position.Y - Direction.Y * _moveSpeed * deltaTime), (int)(Position.X)] == 0)
                 Position.Y -= (float)(Direction.Y * _moveSpeed * deltaTime);
         }
 

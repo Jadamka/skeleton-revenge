@@ -42,8 +42,10 @@ public class Game1 : Game
         DebugOverlay.SetFont(font1);
         
         _renderer = new Renderer(GraphicsDevice, ScreenWidth, ScreenHeight);
+        
         _textureManager = new TextureManager();
         _textureManager.LoadTextures(Content);
+        
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
         _level = new Level();
     }

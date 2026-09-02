@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,8 +23,67 @@ public class Renderer
         ClearBuffer();
     }
 
-    public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, TextureManager textureManager, Player player, Level level)
+    private void FloorCasting(TextureManager textureManager, Player player, Level level)
     {
+        Dictionary<int, Color[]> activeFloorTextures = new Dictionary<int, Color[]>();
+        Color[] missingTextureColors = textureManager.GetTextureColor("");
+        foreach (var kvp in level.FloorPallete)
+        {
+            activeFloorTextures[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+        }
+        
+        for (int y = _screenHeight/2 + 1; y < _screenHeight; y++)
+        {
+            float rayDirX0 = (float)(player.Direction.X - player.Plane.X);
+            float rayDirY0 = (float)(player.Direction.Y - player.Plane.Y);
+            float rayDirX1 = (float)(player.Direction.X + player.Plane.X);
+            float rayDirY1 = (float)(player.Direction.Y + player.Plane.Y);
+
+            int p = y - _screenHeight / 2;
+            float posZ = 0.5f * _screenHeight;
+            float rowDistance = posZ / p;
+
+            float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / _screenWidth;
+            float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / _screenWidth;
+
+            float floorX = (float)(player.Position.X + rowDistance * rayDirX0);
+            float floorY = (float)(player.Position.Y + rowDistance * rayDirY0);
+
+            for (int x = 0; x < _screenWidth; x++)
+            {
+                int cellX = (int)(floorX);
+                int cellY = (int)(floorY);
+                
+                int tx = (int)(textureManager.TextureWidth * (floorX - cellX)) & (textureManager.TextureWidth - 1);
+                int ty = (int)(textureManager.TextureHeight * (floorY - cellY)) & (textureManager.TextureHeight - 1);
+
+                floorX += floorStepX;
+                floorY += floorStepY;
+
+                // FIXME: get rid of this magic number
+                if (cellX >= 0 && cellX < 24 && cellY >= 0 && cellY < 24)
+                {
+                    int texNum = level.floorMap[cellY, cellX];
+                    if (!activeFloorTextures.TryGetValue(texNum, out Color[] floorTextureColors))
+                    {
+                        floorTextureColors = missingTextureColors;
+                    }
+                    Color texel = floorTextureColors[textureManager.TextureWidth * ty + tx];
+                    _buffer[x + _screenWidth * y] = texel;
+                }
+            }
+        }
+    }
+
+    private void WallCasting(TextureManager textureManager, Player player, Level level)
+    {
+        Dictionary<int, Color[]> activeWallTextures = new Dictionary<int, Color[]>();
+        Color[] missingTextureColors = textureManager.GetTextureColor("");
+        foreach (var kvp in level.WallPallete)
+        {
+            activeWallTextures[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+        }
+        
         for (int x = 0; x < _screenWidth; x++)
         {
             double cameraX = 2 * x / (double)(_screenWidth) - 1;
@@ -84,7 +144,7 @@ public class Renderer
                     side = 1;
                 }
 
-                if (level.worldMap[mapY, mapX] > 0) hitWall = true;
+                if (level.wallMap[mapY, mapX] > 0) hitWall = true;
             }
 
             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
@@ -97,8 +157,11 @@ public class Renderer
             int drawEnd = lineHeight / 2 + _screenHeight / 2;
             if (drawEnd >= _screenHeight) drawEnd = _screenHeight - 1;
             
-            int texNum = level.worldMap[mapY, mapX];
-            Color[] currentTextureColors = textureManager.GetTextureColor(level.GetTextureName(texNum));
+            int texNum = level.wallMap[mapY, mapX];
+            if (!activeWallTextures.TryGetValue(texNum, out Color[] wallTextureColors))
+            {
+                wallTextureColors = missingTextureColors;
+            }
             
             double wallX;
             if (side == 0) wallX = player.Position.Y + perpWallDist * rayDirY;
@@ -116,13 +179,19 @@ public class Renderer
             {
                 int texY = (int)texPos & (textureManager.TextureHeight - 1);
                 texPos += step;
-                Color texel = currentTextureColors[texX + textureManager.TextureWidth * texY];
+                Color texel = wallTextureColors[texX + textureManager.TextureWidth * texY];
                 if (side == 1)
                     texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
                 
                 _buffer[x + _screenWidth * y] = texel;
             }
         }
+    }
+    
+    public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, TextureManager textureManager, Player player, Level level)
+    {
+        FloorCasting(textureManager, player, level);
+        WallCasting(textureManager, player, level);
         
         _screenTexture.SetData(_buffer);
         ClearBuffer();
