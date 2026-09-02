@@ -11,8 +11,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private int ScreenWidth = 800;
-    private int ScreenHeight = 600;
+    private readonly int _screenWidth = 1280;
+    private readonly int _screenHeight = 720;
+    private readonly int _bufferWidth = 800;
+    private readonly int _bufferHeight = 600;
 
     private Player _player;
     private Level _level;
@@ -22,8 +24,8 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = ScreenWidth;
-        _graphics.PreferredBackBufferHeight = ScreenHeight;
+        _graphics.PreferredBackBufferWidth = _screenWidth;
+        _graphics.PreferredBackBufferHeight = _screenHeight;
         
         Content.RootDirectory = "Content";
         
@@ -44,7 +46,7 @@ public class Game1 : Game
         SpriteFont font1 = Content.Load<SpriteFont>("fonts/ArialFont");
         DebugOverlay.SetFont(font1);
         
-        _renderer = new Renderer(GraphicsDevice, ScreenWidth, ScreenHeight);
+        _renderer = new Renderer(GraphicsDevice, _bufferWidth, _bufferHeight);
         
         _textureManager = new TextureManager();
         _textureManager.LoadTextures(Content);
@@ -74,8 +76,8 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        _renderer.Render3D(_spriteBatch, GraphicsDevice, _textureManager, _player, _level);
         
+        _renderer.Render3D(_spriteBatch, _textureManager, _player, _level);
         DebugOverlay.Draw(_spriteBatch, gameTime, _player);
         
         _spriteBatch.End();

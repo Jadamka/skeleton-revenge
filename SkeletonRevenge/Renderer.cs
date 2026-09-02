@@ -8,8 +8,8 @@ namespace SkeletonRevenge;
 public class Renderer
 {
     private Color[] _buffer;
-    private int _screenWidth;
-    private int _screenHeight;
+    private int _bufferWidth;
+    private int _bufferHeight;
     private Texture2D _screenTexture;
 
     private Level _cachedLevel = null;
@@ -17,37 +17,40 @@ public class Renderer
     private Dictionary<int, Color[]> _floorTextureCache = new Dictionary<int, Color[]>();
     private Color[] _missingTextureColors;
 
-    public Renderer(GraphicsDevice graphicsDevice, int screenWidth, int screenHeight)
+    private GraphicsDevice _graphicsDevice;
+
+    public Renderer(GraphicsDevice graphicsDevice, int bufferWidth, int bufferHeight)
     {
-        _screenWidth = screenWidth;
-        _screenHeight = screenHeight;
+        _bufferWidth = bufferWidth;
+        _bufferHeight = bufferHeight;
+
+        _graphicsDevice = graphicsDevice;
+        _screenTexture = new Texture2D(graphicsDevice, bufferWidth, bufferHeight);
         
-        _screenTexture = new Texture2D(graphicsDevice, screenWidth, screenHeight);
-        
-        _buffer = new Color[_screenWidth * _screenHeight];
+        _buffer = new Color[_bufferWidth * _bufferHeight];
         ClearBuffer();
     }
 
     private void FloorCasting(TextureManager textureManager, Player player, Level level)
     {
-        for (int y = _screenHeight/2 + 1; y < _screenHeight; y++)
+        for (int y = (_bufferHeight)/2 + 1; y < _bufferHeight; y++)
         {
             float rayDirX0 = (float)(player.Direction.X - player.Plane.X);
             float rayDirY0 = (float)(player.Direction.Y - player.Plane.Y);
             float rayDirX1 = (float)(player.Direction.X + player.Plane.X);
             float rayDirY1 = (float)(player.Direction.Y + player.Plane.Y);
 
-            int p = y - _screenHeight / 2;
-            float posZ = 0.5f * _screenHeight;
+            int p = y - _bufferHeight / 2;
+            float posZ = 0.5f * _bufferHeight;
             float rowDistance = posZ / p;
 
-            float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / _screenWidth;
-            float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / _screenWidth;
+            float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / _bufferWidth;
+            float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / _bufferWidth;
 
             float floorX = (float)(player.Position.X + rowDistance * rayDirX0);
             float floorY = (float)(player.Position.Y + rowDistance * rayDirY0);
 
-            for (int x = 0; x < _screenWidth; x++)
+            for (int x = 0; x < _bufferWidth; x++)
             {
                 int cellX = (int)(floorX);
                 int cellY = (int)(floorY);
@@ -67,7 +70,7 @@ public class Renderer
                         floorTextureColors = _missingTextureColors;
                     }
                     Color texel = floorTextureColors[textureManager.TextureWidth * ty + tx];
-                    _buffer[x + _screenWidth * y] = texel;
+                    _buffer[x + _bufferWidth * y] = texel;
                 }
             }
         }
@@ -75,9 +78,9 @@ public class Renderer
 
     private void WallCasting(TextureManager textureManager, Player player, Level level)
     {
-        for (int x = 0; x < _screenWidth; x++)
+        for (int x = 0; x < _bufferWidth; x++)
         {
-            double cameraX = 2 * x / (double)(_screenWidth) - 1;
+            double cameraX = 2 * x / (double)(_bufferWidth) - 1;
             double rayDirX = player.Direction.X + player.Plane.X * cameraX;
             double rayDirY = player.Direction.Y + player.Plane.Y * cameraX;
 
@@ -141,12 +144,12 @@ public class Renderer
             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
             else perpWallDist = (sideDistY - deltaDistY);
 
-            int lineHeight = (int)(_screenHeight / perpWallDist);
+            int lineHeight = (int)(_bufferHeight / perpWallDist);
 
-            int drawStart = -lineHeight / 2 + _screenHeight / 2;
+            int drawStart = -lineHeight / 2 + _bufferHeight / 2;
             if (drawStart < 0) drawStart = 0;
-            int drawEnd = lineHeight / 2 + _screenHeight / 2;
-            if (drawEnd >= _screenHeight) drawEnd = _screenHeight - 1;
+            int drawEnd = lineHeight / 2 + _bufferHeight / 2;
+            if (drawEnd >= _bufferHeight) drawEnd = _bufferHeight - 1;
             
             int texNum = level.wallMap[mapY, mapX];
             if (!_wallTextureCache.TryGetValue(texNum, out Color[] wallTextureColors))
@@ -164,7 +167,7 @@ public class Renderer
             if (side == 1 && rayDirY < 0) texX = textureManager.TextureWidth - texX - 1;
 
             double step = 1.0 * textureManager.TextureHeight / lineHeight;
-            double texPos = (drawStart - _screenHeight / 2 + lineHeight / 2) * step;
+            double texPos = (drawStart - _bufferHeight / 2 + lineHeight / 2) * step;
 
             for (int y = drawStart; y < drawEnd; y++)
             {
@@ -174,12 +177,12 @@ public class Renderer
                 if (side == 1)
                     texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
                 
-                _buffer[x + _screenWidth * y] = texel;
+                _buffer[x + _bufferWidth * y] = texel;
             }
         }
     }
     
-    public void Render3D(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, TextureManager textureManager, Player player, Level level)
+    public void Render3D(SpriteBatch spriteBatch, TextureManager textureManager, Player player, Level level)
     {
         if (_cachedLevel != level)
         {
@@ -201,7 +204,9 @@ public class Renderer
         
         _screenTexture.SetData(_buffer);
         ClearBuffer();
-        spriteBatch.Draw(_screenTexture, Vector2.Zero, Color.White);
+
+        Rectangle screenRect = new Rectangle(0, 0, _graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height);
+        spriteBatch.Draw(_screenTexture, screenRect, Color.White);
     }
 
     private void ClearBuffer()
