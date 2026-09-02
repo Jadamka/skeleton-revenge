@@ -24,7 +24,7 @@ public sealed class DebugOverlay
 
     private static int _frameCount = 0;
     private static double _timeElapsed = 0;
-    private static int _displayFps = 30;
+    private static int _displayFps = 60;
     
     public static void SetFont(SpriteFont font)
     {
@@ -32,9 +32,9 @@ public sealed class DebugOverlay
         _isFontSet = true;
     }
 
-    public static void SetIsVisible(bool isVisible)
+    public static void SetIsVisible()
     {
-        _isVisible = isVisible;
+        _isVisible = !_isVisible;
     }
 
     public static void Draw(SpriteBatch spriteBatch, GameTime gameTime, Player player)

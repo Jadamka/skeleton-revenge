@@ -59,6 +59,11 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        if (Keyboard.GetState().IsKeyDown(Keys.F12))
+        {
+            DebugOverlay.SetIsVisible();
+        }
+        
         _player.Update(gameTime, _level);
 
         base.Update(gameTime);
