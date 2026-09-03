@@ -10,6 +10,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private KeyboardState _oldState; // For key being pressed not held
 
     private readonly int _screenWidth = 1280;
     private readonly int _screenHeight = 720;
@@ -35,6 +36,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         this.Window.Title = "Skeleton Revenge";
+        _oldState = Keyboard.GetState();
 
         base.Initialize();
     }
@@ -52,7 +54,7 @@ public class Game1 : Game
         _textureManager.LoadTextures(Content);
         
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
-        _level = new Level();
+        _level = new Level(_textureManager);
     }
 
     protected override void Update(GameTime gameTime)
@@ -61,13 +63,18 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        if (Keyboard.GetState().IsKeyDown(Keys.F12))
+        KeyboardState newState = Keyboard.GetState();
+        if (newState.IsKeyDown(Keys.F1))
         {
-            DebugOverlay.SetIsVisible();
+            if (!_oldState.IsKeyDown(Keys.F1))
+            {
+                DebugOverlay.SetIsVisible();
+            }
         }
         
         _player.Update(gameTime, _level);
 
+        _oldState = newState;
         base.Update(gameTime);
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace SkeletonRevenge;
 
@@ -19,6 +20,8 @@ public class Level
     public const int MapWidth = 24;
     public const int MapHeight = 24;
 
+    public List<Entity> entities;
+    
     public int[,] wallMap { get; private set; } = new int[MapWidth, MapHeight]
     {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -102,26 +105,36 @@ public class Level
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
-
-    public Level()
+    
+    public Level(TextureManager textureManager)
     {
+        entities = new List<Entity>()
+        {
+            new(new Vector2(1.5f, 1.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+            new(new Vector2(2.5f, 1.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+            new(new Vector2(3.5f, 1.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+            new(new Vector2(1.5f, 2.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+            new(new Vector2(1.5f, 3.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+            new(new Vector2(2.5f, 2.5f), textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)),
+        };
+        
         WallPallete = new Dictionary<int, string>
         {
-            {1, TextureNames.BloodyBrickWall},
-            {2, TextureNames.BarrelWall},
-            {3, TextureNames.WoodWall},
-            {4, TextureNames.MansionWall},
+            {1, TextureNames.Textures.BloodyBrickWall},
+            {2, TextureNames.Textures.BarrelWall},
+            {3, TextureNames.Textures.WoodWall},
+            {4, TextureNames.Textures.MansionWall},
         };
 
         FloorPallete = new Dictionary<int, string>
         {
-            {1, TextureNames.GrassFloor},
-            {2, TextureNames.Stone},
+            {1, TextureNames.Textures.GrassFloor},
+            {2, TextureNames.Textures.Stone},
         };
 
         CeilingPallete = new Dictionary<int, string>
         {
-            {1, TextureNames.Stone}
+            {1, TextureNames.Textures.Stone}
         };
     }
 
@@ -149,6 +162,6 @@ public class Level
             }
         }
 
-        return TextureNames.MissingTexture;
+        return TextureNames.Textures.MissingTexture;
     }
 }

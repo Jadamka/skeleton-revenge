@@ -24,12 +24,14 @@ public class TextureManager
 
     public void LoadTextures(ContentManager content)
     {
-        _textures[TextureNames.Stone] = LoadAndExtract(content, "textures/stone_texture");
-        _textures[TextureNames.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
-        _textures[TextureNames.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
-        _textures[TextureNames.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
-        _textures[TextureNames.GrassFloor] = LoadAndExtract(content, "textures/grass_floor_texture");
-        _textures[TextureNames.BloodyBrickWall] = LoadAndExtract(content, "textures/bloody_brick_wall_texture");
+        _textures[TextureNames.Textures.Stone] = LoadAndExtract(content, "textures/stone_texture");
+        _textures[TextureNames.Textures.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
+        _textures[TextureNames.Textures.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
+        _textures[TextureNames.Textures.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
+        _textures[TextureNames.Textures.GrassFloor] = LoadAndExtract(content, "textures/grass_floor_texture");
+        _textures[TextureNames.Textures.BloodyBrickWall] = LoadAndExtract(content, "textures/bloody_brick_wall_texture");
+
+        _textures[TextureNames.Sprites.RatSprite1] = LoadAndExtract(content, "sprites/rat_sprite_1");
     }
 
     private Color[] LoadAndExtract(ContentManager content, string path)

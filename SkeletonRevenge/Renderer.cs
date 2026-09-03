@@ -11,6 +11,7 @@ public class Renderer
     private int _bufferWidth;
     private int _bufferHeight;
     private Texture2D _screenTexture;
+    private double[] _zBuffer;
 
     private Level _cachedLevel = null;
     private Dictionary<int, Color[]> _wallTextureCache = new Dictionary<int, Color[]>();
@@ -25,8 +26,10 @@ public class Renderer
         _bufferWidth = bufferWidth;
         _bufferHeight = bufferHeight;
 
+        _zBuffer = new double[_bufferWidth];
+
         _graphicsDevice = graphicsDevice;
-        _screenTexture = new Texture2D(graphicsDevice, bufferWidth, bufferHeight);
+        _screenTexture = new Texture2D(_graphicsDevice, _bufferWidth, _bufferHeight);
         
         _buffer = new Color[_bufferWidth * _bufferHeight];
         ClearBuffer();
@@ -193,6 +196,70 @@ public class Renderer
                 
                 _buffer[x + _bufferWidth * y] = texel;
             }
+
+            _zBuffer[x] = perpWallDist;
+        }
+    }
+
+    private void DrawEntities(TextureManager textureManager, Player player, Level level)
+    {
+        int[] entityOrder = new int[level.entities.Count];
+        double[] entityDistance = new double[level.entities.Count];
+        
+        for (int i = 0; i < level.entities.Count; i++)
+        {
+            entityOrder[i] = i;
+            entityDistance[i] = ((player.Position.X - level.entities[i].Position.X) * (player.Position.X - level.entities[i].Position.X) +
+                                (player.Position.Y - level.entities[i].Position.Y) * (player.Position.Y - level.entities[i].Position.Y));
+        }
+        SortEntities(entityOrder, entityDistance, level.entities.Count);
+
+        for (int i = 0; i < level.entities.Count; i++)
+        {
+            double entityX = level.entities[entityOrder[i]].Position.X - player.Position.X;
+            double entityY = level.entities[entityOrder[i]].Position.Y - player.Position.Y;
+
+            double invDet = 1.0 / (player.Plane.X * player.Direction.Y - player.Direction.X * player.Plane.Y);
+            
+            double transformX = invDet * (player.Direction.Y * entityX - player.Direction.X * entityY);
+            double transformY = invDet * (-player.Plane.Y * entityX + player.Plane.X * entityY);
+
+            if (transformY <= 0) continue;
+
+            int entityScreenX = (int)((_bufferWidth / 2) * (1 + transformX / transformY));
+
+            int entityHeight = (int)(_bufferHeight / transformY);
+
+            int drawStartY = -entityHeight / 2 + _bufferHeight / 2;
+            if (drawStartY < 0) drawStartY = 0;
+            int drawEndY = entityHeight / 2 + _bufferHeight / 2;
+            if (drawEndY >= _bufferHeight) drawEndY = _bufferHeight - 1;
+            
+            int entityWidth = Math.Abs((int)(_bufferHeight / transformY));
+            int drawStartX = -entityWidth / 2 + entityScreenX;
+            if (drawStartX < 0) drawStartX = 0;
+            int drawEndX = entityWidth / 2 + entityScreenX;
+            if (drawEndX >= _bufferWidth) drawEndX = _bufferWidth - 1;
+
+            for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+            {
+                int texX = (int)(256 * (stripe - (-entityWidth / 2 + entityScreenX)) * textureManager.TextureWidth /
+                                 entityWidth) / 256;
+
+                if (transformY > 0 && stripe > 0 && stripe < _bufferWidth && transformY < _zBuffer[stripe])
+                {
+                    for (int y = drawStartY; y < drawEndY; y++)
+                    {
+                        int d = (y) * 256 - _bufferHeight * 128 + entityHeight * 128;
+                        int texY = ((d * textureManager.TextureHeight) / entityHeight) / 256;
+                        Color texel = level.entities[entityOrder[i]].Pixels[texX + textureManager.TextureWidth * texY];
+                        if (texel != Color.Black && texel.A > 0)
+                        {
+                            _buffer[stripe + _bufferWidth * y] = texel;
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -200,7 +267,7 @@ public class Renderer
     {
         if (_cachedLevel != level)
         {
-            _missingTextureColors = textureManager.GetTextureColor(TextureNames.MissingTexture);
+            _missingTextureColors = textureManager.GetTextureColor(TextureNames.Textures.MissingTexture);
             
             _wallTextureCache.Clear();
             foreach (var kvp in level.WallPallete)
@@ -219,6 +286,7 @@ public class Renderer
         
         FloorAndCeilingCasting(textureManager, player, level);
         WallCasting(textureManager, player, level);
+        DrawEntities(textureManager, player, level);
         
         _screenTexture.SetData(_buffer);
         ClearBuffer();
@@ -230,5 +298,13 @@ public class Renderer
     private void ClearBuffer()
     {
         Array.Fill(_buffer, Color.Black);
+    }
+
+    private void SortEntities(int[] order, double[] dist, int amount)
+    {
+        Array.Sort(dist, order, 0, amount);
+        
+        Array.Reverse(dist, 0, amount);
+        Array.Reverse(order, 0, amount);
     }
 }
