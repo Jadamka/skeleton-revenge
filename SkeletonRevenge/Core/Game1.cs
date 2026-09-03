@@ -58,7 +58,7 @@ public class Game1 : Game
         _textureManager.LoadTextures(Content);
         
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
-        _level = new Level(_textureManager);
+        _level = LevelLoader.LoadLevelXML(Content, _textureManager,"levels/level01.xml");
     }
 
     protected override void Update(GameTime gameTime)

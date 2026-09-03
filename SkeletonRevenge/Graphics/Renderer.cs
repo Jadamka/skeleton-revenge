@@ -69,7 +69,7 @@ public class Renderer
 
                 if (cellX >= 0 && cellX < level.MapWidth && cellY >= 0 && cellY < level.MapHeight)
                 {
-                    int texNum = level.floorMap[cellY, cellX];
+                    int texNum = level.FloorMap[cellY, cellX];
                     if (!_floorTextureCache.TryGetValue(texNum, out Color[] floorTextureColors))
                     {
                         floorTextureColors = _missingTextureColors;
@@ -79,7 +79,7 @@ public class Renderer
                     texel = new Color(texel.R / 2, texel.G / 2, texel.B / 2);
                     _buffer[x + _bufferWidth * y] = texel;
 
-                    texNum = level.ceilingMap[cellY, cellX];
+                    texNum = level.CeilingMap[cellY, cellX];
                     if (!_ceilingTextureCache.TryGetValue(texNum, out Color[] ceilingTextureColors))
                     {
                         ceilingTextureColors = _missingTextureColors;
@@ -156,7 +156,7 @@ public class Renderer
                     side = 1;
                 }
 
-                if (level.wallMap[mapY, mapX] > 0) hitWall = true;
+                if (level.WallMap[mapY, mapX] > 0) hitWall = true;
             }
 
             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
@@ -169,7 +169,7 @@ public class Renderer
             int drawEnd = lineHeight / 2 + _bufferHeight / 2;
             if (drawEnd >= _bufferHeight) drawEnd = _bufferHeight - 1;
             
-            int texNum = level.wallMap[mapY, mapX];
+            int texNum = level.WallMap[mapY, mapX];
             if (!_wallTextureCache.TryGetValue(texNum, out Color[] wallTextureColors))
             {
                 wallTextureColors = _missingTextureColors;
@@ -273,15 +273,15 @@ public class Renderer
             _missingTextureColors = textureManager.GetTextureColor(TextureNames.Textures.MissingTexture);
             
             _wallTextureCache.Clear();
-            foreach (var kvp in level.WallPallete)
+            foreach (var kvp in level.WallPalette)
                 _wallTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
             
             _floorTextureCache.Clear();
-            foreach (var kvp in level.FloorPallete)
+            foreach (var kvp in level.FloorPalette)
                 _floorTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
 
             _ceilingTextureCache.Clear();
-            foreach(var kvp in level.CeilingPallete)
+            foreach(var kvp in level.CeilingPalette)
                 _ceilingTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
             
             _cachedLevel = level;
