@@ -23,7 +23,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Add collision to certain sprites
 - [ ] More complex lighting system
 - [ ] Animated sprites
-- [ ] Optimize Rendering
+- [ ] Maybe create my own level editor???
 
 **Gameplay & Content**
 - [ ] Working Weapon System

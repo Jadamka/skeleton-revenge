@@ -29,6 +29,12 @@
 /processorParam:Version=3.8.5.1
 /build:fonts/DoomFont.spritefont;fonts/ArialFont.spritefont
 
+#begin levels/level01.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/processorParam:Version=3.8.5.1
+/build:levels/level01.xml
+
 #begin sprites/rat_sprite_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
