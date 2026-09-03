@@ -245,6 +245,7 @@ public class Renderer
             {
                 int texX = (int)(256 * (stripe - (-entityWidth / 2 + entityScreenX)) * textureManager.TextureWidth /
                                  entityWidth) / 256;
+                texX = Math.Clamp(texX, 0, textureManager.TextureWidth - 1);
 
                 if (transformY > 0 && stripe > 0 && stripe < _bufferWidth && transformY < _zBuffer[stripe])
                 {
@@ -252,6 +253,7 @@ public class Renderer
                     {
                         int d = (y) * 256 - _bufferHeight * 128 + entityHeight * 128;
                         int texY = ((d * textureManager.TextureHeight) / entityHeight) / 256;
+                        texY = Math.Clamp(texY, 0, textureManager.TextureHeight - 1);
                         Color texel = level.entities[entityOrder[i]].Pixels[texX + textureManager.TextureWidth * texY];
                         if (texel != Color.Black && texel.A > 0)
                         {
