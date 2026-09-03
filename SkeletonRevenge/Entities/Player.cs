@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SkeletonRevenge.World;
 
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.Entities;
 
 public class Player
 {

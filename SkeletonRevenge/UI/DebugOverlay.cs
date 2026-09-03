@@ -1,8 +1,9 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SkeletonRevenge.Entities;
 
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.UI;
 
 // This should be thread-safe, I believe...
 public sealed class DebugOverlay

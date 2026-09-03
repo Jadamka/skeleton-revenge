@@ -1,4 +1,4 @@
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.Graphics;
 
 public static class TextureNames
 {

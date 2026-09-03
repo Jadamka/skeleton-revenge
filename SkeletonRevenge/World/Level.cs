@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using SkeletonRevenge.Entities;
+using SkeletonRevenge.Graphics;
 
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.World;
 
 public enum TexturePallete
 {
@@ -17,12 +19,12 @@ public class Level
     public Dictionary<int, string> FloorPallete { get; private set; }
     public Dictionary<int, string> CeilingPallete { get; private set; }
     
-    public const int MapWidth = 24;
-    public const int MapHeight = 24;
+    public int MapWidth => wallMap.GetLength(0);
+    public int MapHeight => wallMap.GetLength(1);
 
     public List<Entity> entities;
     
-    public int[,] wallMap { get; private set; } = new int[MapWidth, MapHeight]
+    public int[,] wallMap { get; private set; } = new int[,]
     {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -50,7 +52,7 @@ public class Level
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
-    public int[,] floorMap { get; private set; } = new int[MapWidth, MapHeight]
+    public int[,] floorMap { get; private set; } = new int[,]
     {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -78,7 +80,7 @@ public class Level
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
     
-    public int[,] ceilingMap { get; private set; } = new int[MapWidth, MapHeight]
+    public int[,] ceilingMap { get; private set; } = new int[,]
     {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },

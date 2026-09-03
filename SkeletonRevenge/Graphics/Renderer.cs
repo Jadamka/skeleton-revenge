@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SkeletonRevenge.Entities;
+using SkeletonRevenge.World;
 
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.Graphics;
 
 public class Renderer
 {
@@ -65,8 +67,7 @@ public class Renderer
                 floorX += floorStepX;
                 floorY += floorStepY;
 
-                // FIXME: get rid of this magic number
-                if (cellX >= 0 && cellX < 24 && cellY >= 0 && cellY < 24)
+                if (cellX >= 0 && cellX < level.MapWidth && cellY >= 0 && cellY < level.MapHeight)
                 {
                     int texNum = level.floorMap[cellY, cellX];
                     if (!_floorTextureCache.TryGetValue(texNum, out Color[] floorTextureColors))

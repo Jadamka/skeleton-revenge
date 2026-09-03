@@ -3,8 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SkeletonRevenge.Entities;
+using SkeletonRevenge.Graphics;
+using SkeletonRevenge.UI;
+using SkeletonRevenge.World;
 
-namespace SkeletonRevenge;
+namespace SkeletonRevenge.Core;
 
 public class Game1 : Game
 {
