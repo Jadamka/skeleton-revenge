@@ -14,8 +14,8 @@ public class Game1 : Game
 
     private readonly int _screenWidth = 1280;
     private readonly int _screenHeight = 720;
-    private readonly int _bufferWidth = 800;
-    private readonly int _bufferHeight = 600;
+    private readonly int _bufferWidth = 640;
+    private readonly int _bufferHeight = 360;
 
     private Player _player;
     private Level _level;
