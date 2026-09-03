@@ -15,7 +15,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [x] Wall Textures
 - [x] Floor Casting
 - [x] Ceiling Casting
-- [ ] 2D Sprite Rendering (Entities & Objects)
+- [x] 2D Sprite Rendering (Entities & Objects)
 - [ ] Load levels from XML
 - [ ] Weapon rendering (player holding weapon, or sword or something else...)
 - [ ] Distance fog
@@ -53,6 +53,12 @@ The engine is currently in active development. Here is the checklist of planned 
     <td align="center">
       <img src="https://github.com/user-attachments/assets/7c877944-693e-4835-900b-a865077da0fd" alt="Update 4" width="100%"/>
       <br /><em>Update 4: Ceiling Casting</em>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/22bafcf1-1bd6-4010-8566-3c44f81111c2" alt="Update 4" width="100%"/>
+      <br /><em>Update 4: Sprite Rendering</em>
     </td>
   </tr>
 </table>
