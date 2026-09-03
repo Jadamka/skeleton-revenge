@@ -16,6 +16,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [x] Floor Casting
 - [x] Ceiling Casting
 - [ ] 2D Sprite Rendering (Entities & Objects)
+- [ ] Weapon rendering (player holding weapon, or sword or something else...)
 - [ ] Distance fog
 - [ ] Night sky with stars that rotate with players rotation
 - [ ] Add collision to certain sprites
