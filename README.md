@@ -66,8 +66,11 @@ The engine is currently in active development. Here is the checklist of planned 
 
 ## 🎮 Controls
 ⬆️ - Move forward
+
 ⬇️ - Move back
+
 ⬅️ - Rotate left
+
 ➡️ - Rotate right
 
 ## ⚠️ Disclaimer
