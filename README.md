@@ -23,7 +23,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Night sky with stars that rotate with players rotation
 - [ ] Add collision to certain sprites
 - [ ] More complex lighting system
-- [ ] Rotated sprites, when entity is moving to left it should be facing left
+- [ ] Rotated sprites, when entity is moving to the left it should be facing left (or based on angle towards player - atan2)
 - [ ] Animated sprites
 - [ ] Make more weapons. Weapon class needs to be abstract (rename to BaseWeapon)
 - [ ] Maybe create my own level editor???
