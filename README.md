@@ -37,7 +37,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] More levels
 - [ ] Story
 
-**FIX THIS**
+**CHANGE?**
 - [ ] Do I need to load every single texture in TextureManager?
 
 ## 📷 Pictures from each update of game
@@ -66,6 +66,10 @@ The engine is currently in active development. Here is the checklist of planned 
     <td align="center">
       <img src="https://github.com/user-attachments/assets/22bafcf1-1bd6-4010-8566-3c44f81111c2" alt="Update 4" width="100%"/>
       <br /><em>Update 4: Sprite Rendering</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/7f52f281-d893-4aca-a9d0-d689ce9ce2d2" alt="Update 5" width="100%"/>
+      <br /><em>Update 5: Rendering Weapon</em>
     </td>
   </tr>
 </table>
