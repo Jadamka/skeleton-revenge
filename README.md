@@ -34,7 +34,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] More levels
 - [ ] Story
 
-## Pictures from each update of game
+## 📷 Pictures from each update of game
 <table>
   <tr>
     <td align="center">
@@ -64,6 +64,11 @@ The engine is currently in active development. Here is the checklist of planned 
   </tr>
 </table>
 
+## 🎮 Controls
+⬆️ - Move forward
+⬇️ - Move back
+⬅️ - Rotate left
+➡️ - Rotate right
 
 ## ⚠️ Disclaimer
 *Note: This is personal project created for learning and development purposes. Textures and visual assets are currently sourced from Monolith Productions game "Blood (1997) and are used strictly as non-commercial placeholders.*
