@@ -23,6 +23,7 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] Night sky with stars that rotate with players rotation
 - [ ] Add collision to certain sprites
 - [ ] More complex lighting system
+- [ ] Rotated sprites, when entity is moving to left it should be facing left
 - [ ] Animated sprites
 - [ ] Maybe create my own level editor???
 
