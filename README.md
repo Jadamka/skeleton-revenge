@@ -25,15 +25,20 @@ The engine is currently in active development. Here is the checklist of planned 
 - [ ] More complex lighting system
 - [ ] Rotated sprites, when entity is moving to left it should be facing left
 - [ ] Animated sprites
+- [ ] Make more weapons. Weapon class needs to be abstract (rename to BaseWeapon)
 - [ ] Maybe create my own level editor???
 
 **Gameplay & Content**
 - [ ] Working Weapon System
 - [ ] Decals
+- [ ] View bobbing
 - [ ] HUD
 - [ ] Enemy AI and Combat
 - [ ] More levels
 - [ ] Story
+
+**FIX THIS**
+- [ ] Do I need to load every single texture in TextureManager?
 
 ## 📷 Pictures from each update of game
 <table>

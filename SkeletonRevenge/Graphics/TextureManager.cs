@@ -8,7 +8,7 @@ namespace SkeletonRevenge.Graphics;
 
 public class TextureManager
 {
-    private Dictionary<string, Color[]> _textures;
+    private Dictionary<string, Color[]> _cpuTextures;
 
     public int TextureWidth { get; private set; } = 128;
     public int TextureHeight { get; private set; } = 128;
@@ -17,21 +17,22 @@ public class TextureManager
     
     public TextureManager()
     {
-        _textures = new Dictionary<string, Color[]>();
+        _cpuTextures = new Dictionary<string, Color[]>();
         
         CreateMissingTexture();
     }
 
     public void LoadTextures(ContentManager content)
     {
-        _textures[TextureNames.Textures.Stone] = LoadAndExtract(content, "textures/stone_texture");
-        _textures[TextureNames.Textures.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
-        _textures[TextureNames.Textures.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
-        _textures[TextureNames.Textures.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
-        _textures[TextureNames.Textures.GrassFloor] = LoadAndExtract(content, "textures/grass_floor_texture");
-        _textures[TextureNames.Textures.BloodyBrickWall] = LoadAndExtract(content, "textures/bloody_brick_wall_texture");
+        // CPU -> For raycasting
+        _cpuTextures[TextureNames.Textures.Stone] = LoadAndExtract(content, "textures/stone_texture");
+        _cpuTextures[TextureNames.Textures.BarrelWall] = LoadAndExtract(content,"textures/barrel_wall_texture");
+        _cpuTextures[TextureNames.Textures.WoodWall] = LoadAndExtract(content,"textures/wood_wall_texture");
+        _cpuTextures[TextureNames.Textures.MansionWall] = LoadAndExtract(content,"textures/mansion_wall_texture");
+        _cpuTextures[TextureNames.Textures.GrassFloor] = LoadAndExtract(content, "textures/grass_floor_texture");
+        _cpuTextures[TextureNames.Textures.BloodyBrickWall] = LoadAndExtract(content, "textures/bloody_brick_wall_texture");
 
-        _textures[TextureNames.Sprites.RatSprite1] = LoadAndExtract(content, "sprites/rat_sprite_1");
+        _cpuTextures[TextureNames.Sprites.RatSprite1] = LoadAndExtract(content, "sprites/rat_sprite_1");
     }
 
     private Color[] LoadAndExtract(ContentManager content, string path)
@@ -43,9 +44,9 @@ public class TextureManager
         return data;
     }
 
-    public Color[] GetTextureColor(string textureName)
+    public Color[] GetCpuTextureColor(string textureName)
     {
-        if (_textures.TryGetValue(textureName, out Color[] colors))
+        if (_cpuTextures.TryGetValue(textureName, out Color[] colors))
         {
             return colors;
         }

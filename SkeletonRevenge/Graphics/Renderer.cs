@@ -270,19 +270,19 @@ public class Renderer
     {
         if (_cachedLevel != level)
         {
-            _missingTextureColors = textureManager.GetTextureColor(TextureNames.Textures.MissingTexture);
+            _missingTextureColors = textureManager.GetCpuTextureColor(TextureNames.Textures.MissingTexture);
             
             _wallTextureCache.Clear();
             foreach (var kvp in level.WallPalette)
-                _wallTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+                _wallTextureCache[kvp.Key] = textureManager.GetCpuTextureColor(kvp.Value);
             
             _floorTextureCache.Clear();
             foreach (var kvp in level.FloorPalette)
-                _floorTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+                _floorTextureCache[kvp.Key] = textureManager.GetCpuTextureColor(kvp.Value);
 
             _ceilingTextureCache.Clear();
             foreach(var kvp in level.CeilingPalette)
-                _ceilingTextureCache[kvp.Key] = textureManager.GetTextureColor(kvp.Value);
+                _ceilingTextureCache[kvp.Key] = textureManager.GetCpuTextureColor(kvp.Value);
             
             _cachedLevel = level;
         }

@@ -53,7 +53,7 @@ public static class LevelLoader
             float x = float.Parse(entityNode.Attribute("x")!.Value);
             float y = float.Parse(entityNode.Attribute("y")!.Value);
             entities.Add(new Entity(new Vector2(x, y),
-                textureManager.GetTextureColor(TextureNames.Sprites.RatSprite1)));
+                textureManager.GetCpuTextureColor(TextureNames.Sprites.RatSprite1)));
         }
 
         XElement mapsNode = doc.Root.Element("Maps");

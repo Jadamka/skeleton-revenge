@@ -1,6 +1,9 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SkeletonRevenge.Entities.Weapons;
 using SkeletonRevenge.World;
 
 namespace SkeletonRevenge.Entities;
@@ -14,6 +17,8 @@ public class Player
 
     private readonly float _moveSpeed;
     private readonly float _rotationSpeed;
+
+    private Weapon EquippedWeapon;
 
     public Player(Vector2 position, Vector2 direction)
     {
@@ -71,5 +76,15 @@ public class Player
             Plane.Y = (float)(oldPlaneX * Math.Sin(_rotationSpeed * deltaTime) +
                               Plane.Y * Math.Cos(_rotationSpeed * deltaTime));
         }
+    }
+
+    public void EquipWeapon(Weapon weapon)
+    {
+        EquippedWeapon = weapon;
+    }
+
+    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    {
+        EquippedWeapon?.Draw(spriteBatch, new Vector2((float)graphicsDevice.Viewport.Width/2, (float)graphicsDevice.Viewport.Height/2));
     }
 }

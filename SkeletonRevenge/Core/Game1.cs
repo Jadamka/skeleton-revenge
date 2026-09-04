@@ -89,6 +89,9 @@ public class Game1 : Game
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         
         _renderer.Render3D(_spriteBatch, _textureManager, _player, _level);
+        
+        _player.Draw(_spriteBatch, GraphicsDevice);
+        
         DebugOverlay.Draw(_spriteBatch, gameTime, _player);
         
         _spriteBatch.End();

@@ -17,5 +17,7 @@ public static class TextureNames
     public static class Sprites
     {
         public const string RatSprite1 = "rat_sprite_1";
+
+        public const string ShotgunSprite1 = "shotgun_sprite_1";
     }
 }
