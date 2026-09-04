@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SkeletonRevenge.Entities;
+using SkeletonRevenge.Entities.Weapons;
 using SkeletonRevenge.Graphics;
 using SkeletonRevenge.UI;
 using SkeletonRevenge.World;
@@ -59,6 +60,10 @@ public class Game1 : Game
         
         _player = new Player(new Vector2(12, 22), new Vector2(-1, 0));
         _level = LevelLoader.LoadLevelXML(Content, _textureManager,"levels/level01.xml");
+        
+        Texture2D shotgunSpritesheet = Content.Load<Texture2D>("spritesheets/shotgun_spritesheet");
+        Weapon shotgun = new Weapon(shotgunSpritesheet, 5, 2.5f);
+        _player.EquipWeapon(shotgun);
     }
 
     protected override void Update(GameTime gameTime)

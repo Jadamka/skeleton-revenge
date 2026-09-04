@@ -85,6 +85,8 @@ public class Player
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-        EquippedWeapon?.Draw(spriteBatch, new Vector2((float)graphicsDevice.Viewport.Width/2, (float)graphicsDevice.Viewport.Height/2));
+        float weaponPositionX = (float)graphicsDevice.Viewport.Width / 2 - EquippedWeapon.Width / 2;
+        float weaponPositionY = graphicsDevice.Viewport.Height - EquippedWeapon.Height;
+        EquippedWeapon?.Draw(spriteBatch, new Vector2(weaponPositionX, weaponPositionY));
     }
 }
